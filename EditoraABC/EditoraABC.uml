@@ -19,7 +19,7 @@
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_tKdvcF4vEd-7f4F2dzPgOQ" name="Preco" isUnique="false">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_zzEbIF4vEd-7f4F2dzPgOQ" name="Prazo" isUnique="false">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -38,8 +38,12 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_nkl_4FhMEd-eq7g3DNBZCQ" name="Deposito"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_ElRg0FhNEd-eq7g3DNBZCQ" name="Pedido Compra">
     <ownedRule xmi:id="_yOizsF43Ed-7f4F2dzPgOQ" name="Constraint" constrainedElement="_ElRg0FhNEd-eq7g3DNBZCQ">
-      <specification xmi:type="uml:OpaqueExpression" xmi:id="_yOnsMF43Ed-7f4F2dzPgOQ" name="specification" body="">
+      <eAnnotations xmi:id="_sAkKUF4-Ed-7f4F2dzPgOQ" source="http://www.eclipse.org/uml2/3.0.0/UML">
+        <details xmi:id="_sAkxYF4-Ed-7f4F2dzPgOQ" key="ModelingLevel" value="M1"/>
+      </eAnnotations>
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_yOnsMF43Ed-7f4F2dzPgOQ" name="specification">
         <language>OCL</language>
+        <body>self.ValorTotal = Item.Preco->sum()</body>
       </specification>
     </ownedRule>
     <ownedAttribute xmi:id="_dF0aQFhUEd-eq7g3DNBZCQ" name="Property_0" isUnique="false"/>
@@ -50,6 +54,9 @@
     <ownedAttribute xmi:id="_8ev8YF4wEd-7f4F2dzPgOQ" name="Property_1" isUnique="false"/>
     <ownedAttribute xmi:id="_bhxvkF4xEd-7f4F2dzPgOQ" name="FormaEnvio" isUnique="false">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_XOeQ4F49Ed-7f4F2dzPgOQ" name="ValorTotal" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
     </ownedAttribute>
     <nestedClassifier xmi:type="uml:Class" xmi:id="_bvVzsFhNEd-eq7g3DNBZCQ" name="Devolucao"/>
     <nestedClassifier xmi:type="uml:Class" xmi:id="_o8gOAFhMEd-eq7g3DNBZCQ" name="Livreiro"/>
@@ -151,17 +158,37 @@
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_izcWUFhSEd-eq7g3DNBZCQ" name="Livro_Esta_Pedido" memberEnd="_iz5CQFhSEd-eq7g3DNBZCQ _i0CzQlhSEd-eq7g3DNBZCQ">
-    <ownedEnd xmi:id="_i0CzQlhSEd-eq7g3DNBZCQ" name="livro" type="_gnfq4FhMEd-eq7g3DNBZCQ" isUnique="false" association="_izcWUFhSEd-eq7g3DNBZCQ">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_i0L9MFhSEd-eq7g3DNBZCQ" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_i0L9MVhSEd-eq7g3DNBZCQ"/>
-    </ownedEnd>
     <ownedEnd xmi:id="_iz5CQFhSEd-eq7g3DNBZCQ" name="pedido Compra" type="_ElRg0FhNEd-eq7g3DNBZCQ" isUnique="false" association="_izcWUFhSEd-eq7g3DNBZCQ">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_i0CzQVhSEd-eq7g3DNBZCQ" value="*"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_i0CzQFhSEd-eq7g3DNBZCQ"/>
     </ownedEnd>
+    <ownedEnd xmi:id="_i0CzQlhSEd-eq7g3DNBZCQ" name="livro" type="_gnfq4FhMEd-eq7g3DNBZCQ" isUnique="false" association="_izcWUFhSEd-eq7g3DNBZCQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_i0L9MFhSEd-eq7g3DNBZCQ" value="*"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_i0L9MVhSEd-eq7g3DNBZCQ"/>
+    </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_fP1QMFhTEd-eq7g3DNBZCQ" name="Fatura"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="__d0aoFhTEd-eq7g3DNBZCQ" name="Entrega"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_fP1QMFhTEd-eq7g3DNBZCQ" name="Fatura">
+    <ownedAttribute xmi:id="_zG8pEF48Ed-7f4F2dzPgOQ" name="FormaPagamento" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_2zqycF48Ed-7f4F2dzPgOQ" name="PrazoPagamento" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="__d0aoFhTEd-eq7g3DNBZCQ" name="Entrega">
+    <ownedRule xmi:id="_xqauwF4-Ed-7f4F2dzPgOQ" name="Constraint" constrainedElement="__d0aoFhTEd-eq7g3DNBZCQ">
+      <eAnnotations xmi:id="_8OGI4F4-Ed-7f4F2dzPgOQ" source="http://www.eclipse.org/uml2/3.0.0/UML">
+        <details xmi:id="_8OGv8F4-Ed-7f4F2dzPgOQ" key="ModelingLevel" value="M1"/>
+      </eAnnotations>
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_xqdLAF4-Ed-7f4F2dzPgOQ" name="specification">
+        <language>OCL</language>
+        <body>self.Custo = pedidoCompra.ValorTotal+transportadora.ValorFrete</body>
+      </specification>
+    </ownedRule>
+    <ownedAttribute xmi:id="_N_9S4F49Ed-7f4F2dzPgOQ" name="Custo" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
+    </ownedAttribute>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_E8SOcFhUEd-eq7g3DNBZCQ" name="A_Entrega_Livreiro" memberEnd="_E84EUFhUEd-eq7g3DNBZCQ _E9B1UlhUEd-eq7g3DNBZCQ">
     <ownedEnd xmi:id="_E9B1UlhUEd-eq7g3DNBZCQ" name="entrega" type="__d0aoFhTEd-eq7g3DNBZCQ" isUnique="false" association="_E8SOcFhUEd-eq7g3DNBZCQ">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E9LmUFhUEd-eq7g3DNBZCQ" value="*"/>
@@ -177,19 +204,19 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_G4jt4FhUEd-eq7g3DNBZCQ" value="*"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_G4jt4VhUEd-eq7g3DNBZCQ"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_G4HB8FhUEd-eq7g3DNBZCQ" name="pedido Compra" type="_ElRg0FhNEd-eq7g3DNBZCQ" isUnique="false" association="_G3qWAFhUEd-eq7g3DNBZCQ">
+    <ownedEnd xmi:id="_G4HB8FhUEd-eq7g3DNBZCQ" name="pedidoCompra" type="_ElRg0FhNEd-eq7g3DNBZCQ" isUnique="false" association="_G3qWAFhUEd-eq7g3DNBZCQ">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_G4Qy8VhUEd-eq7g3DNBZCQ" value="*"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_G4Qy8FhUEd-eq7g3DNBZCQ"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_H-vS0FhUEd-eq7g3DNBZCQ" name="Entrega_Origina_Fatura" memberEnd="_H_VvwFhUEd-eq7g3DNBZCQ _H_e5slhUEd-eq7g3DNBZCQ">
     <ownedEnd xmi:id="_H_e5slhUEd-eq7g3DNBZCQ" name="fatura" type="_fP1QMFhTEd-eq7g3DNBZCQ" isUnique="false" association="_H-vS0FhUEd-eq7g3DNBZCQ">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H_oqsFhUEd-eq7g3DNBZCQ" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H_oqsVhUEd-eq7g3DNBZCQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H_oqsFhUEd-eq7g3DNBZCQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H_oqsVhUEd-eq7g3DNBZCQ" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_H_VvwFhUEd-eq7g3DNBZCQ" name="entrega" type="__d0aoFhTEd-eq7g3DNBZCQ" isUnique="false" association="_H-vS0FhUEd-eq7g3DNBZCQ">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H_e5sVhUEd-eq7g3DNBZCQ" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H_e5sFhUEd-eq7g3DNBZCQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H_e5sVhUEd-eq7g3DNBZCQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H_e5sFhUEd-eq7g3DNBZCQ" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_JFhUsFhUEd-eq7g3DNBZCQ" name="Entrega_Inclui_Livro" memberEnd="_JF-AoFhUEd-eq7g3DNBZCQ _JGHxolhUEd-eq7g3DNBZCQ">
@@ -207,11 +234,15 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Q7LaAFivEd-NI4xNr35e-w" value="*"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Q7KL4FivEd-NI4xNr35e-w"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_Ci7O4F49Ed-7f4F2dzPgOQ" name="Cidade" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <nestedClassifier xmi:type="uml:Class" xmi:id="_CFivUF49Ed-7f4F2dzPgOQ" name="Class_0"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_iZkL0FhUEd-eq7g3DNBZCQ" name="Livreiro_Faz_Pedido" memberEnd="_iaKBsFhUEd-eq7g3DNBZCQ _iaTyslhUEd-eq7g3DNBZCQ">
     <ownedEnd xmi:id="_iaTyslhUEd-eq7g3DNBZCQ" name="livreiro" type="_eVsGsFhUEd-eq7g3DNBZCQ" isUnique="false" association="_iZkL0FhUEd-eq7g3DNBZCQ">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iadjsFhUEd-eq7g3DNBZCQ" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_iadjsVhUEd-eq7g3DNBZCQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iadjsFhUEd-eq7g3DNBZCQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_iadjsVhUEd-eq7g3DNBZCQ" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_iaKBsFhUEd-eq7g3DNBZCQ" name="pedido Compra" type="_ElRg0FhNEd-eq7g3DNBZCQ" isUnique="false" association="_iZkL0FhUEd-eq7g3DNBZCQ">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iaTysVhUEd-eq7g3DNBZCQ" value="*"/>
@@ -224,11 +255,15 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oNDNYVhUEd-eq7g3DNBZCQ"/>
     </ownedEnd>
     <ownedEnd xmi:id="_oMmhcFhUEd-eq7g3DNBZCQ" name="livreiro" type="_eVsGsFhUEd-eq7g3DNBZCQ" isUnique="false" association="_oMAEgFhUEd-eq7g3DNBZCQ">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oM5cYVhUEd-eq7g3DNBZCQ" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oM5cYFhUEd-eq7g3DNBZCQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oM5cYVhUEd-eq7g3DNBZCQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oM5cYFhUEd-eq7g3DNBZCQ" value="1"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="__W9x0FitEd-NI4xNr35e-w" name="Transportadora"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="__W9x0FitEd-NI4xNr35e-w" name="Transportadora">
+    <ownedAttribute xmi:id="_aA4uIF49Ed-7f4F2dzPgOQ" name="ValorFrete" isUnique="false">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
+    </ownedAttribute>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_CpDNoFiuEd-NI4xNr35e-w" name="Transportadora_Custa_Para_Livreiro" memberEnd="_Cpq4sFiuEd-NI4xNr35e-w _Cp6JQFiuEd-NI4xNr35e-w">
     <ownedEnd xmi:id="_Cp6JQFiuEd-NI4xNr35e-w" name="transportadora" type="__W9x0FitEd-NI4xNr35e-w" isUnique="false" association="_CpDNoFiuEd-NI4xNr35e-w">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CqG9kFiuEd-NI4xNr35e-w" value="*"/>
@@ -241,8 +276,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_ZWkHYFiuEd-NI4xNr35e-w" name="Transportadora_Faz_Entrega" memberEnd="_ZX2g0FiuEd-NI4xNr35e-w _ZYNtMFiuEd-NI4xNr35e-w">
     <ownedEnd xmi:id="_ZYNtMFiuEd-NI4xNr35e-w" name="transportadora" type="__W9x0FitEd-NI4xNr35e-w" isUnique="false" association="_ZWkHYFiuEd-NI4xNr35e-w">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZYZ6cFiuEd-NI4xNr35e-w" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZYbIkFiuEd-NI4xNr35e-w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZYZ6cFiuEd-NI4xNr35e-w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZYbIkFiuEd-NI4xNr35e-w" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_ZX2g0FiuEd-NI4xNr35e-w" name="entrega" type="__d0aoFhTEd-eq7g3DNBZCQ" isUnique="false" association="_ZWkHYFiuEd-NI4xNr35e-w">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZYL4AFiuEd-NI4xNr35e-w" value="*"/>
@@ -268,8 +303,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_TeGCsFivEd-NI4xNr35e-w" name="Livreiro_Faz_Solicitacao_Devolucao" memberEnd="_TfLn0FivEd-NI4xNr35e-w _TfYcIFivEd-NI4xNr35e-w">
     <ownedEnd xmi:id="_TfYcIFivEd-NI4xNr35e-w" name="livreiro" type="_eVsGsFhUEd-eq7g3DNBZCQ" isUnique="false" association="_TeGCsFivEd-NI4xNr35e-w">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TfrXEFivEd-NI4xNr35e-w" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TfslMFivEd-NI4xNr35e-w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TfrXEFivEd-NI4xNr35e-w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TfslMFivEd-NI4xNr35e-w" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_TfLn0FivEd-NI4xNr35e-w" name="solicitacao_Devolucao" type="_NKhL0FivEd-NI4xNr35e-w" isUnique="false" association="_TeGCsFivEd-NI4xNr35e-w">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TfV_4FivEd-NI4xNr35e-w" value="*"/>
@@ -288,8 +323,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_h1m60FivEd-NI4xNr35e-w" name="Livreiro_Paga_Fatura" memberEnd="_h2RpMFivEd-NI4xNr35e-w _h2oOgFivEd-NI4xNr35e-w">
     <ownedEnd xmi:id="_h2oOgFivEd-NI4xNr35e-w" name="livreiro" type="_eVsGsFhUEd-eq7g3DNBZCQ" isUnique="false" association="_h1m60FivEd-NI4xNr35e-w">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h2x_gFivEd-NI4xNr35e-w" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_h2zNoFivEd-NI4xNr35e-w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h2x_gFivEd-NI4xNr35e-w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_h2zNoFivEd-NI4xNr35e-w" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_h2RpMFivEd-NI4xNr35e-w" name="fatura" type="_fP1QMFhTEd-eq7g3DNBZCQ" isUnique="false" association="_h1m60FivEd-NI4xNr35e-w">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_h2nAYFivEd-NI4xNr35e-w" value="*"/>
@@ -309,8 +344,8 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_HpA1oFiwEd-NI4xNr35e-w" name="Contrato_Direitos_Autorais"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_LnOXoFiwEd-NI4xNr35e-w" name="Autor_Assina_Contrato" memberEnd="_Ln8wYFiwEd-NI4xNr35e-w _LoHvgFiwEd-NI4xNr35e-w">
     <ownedEnd xmi:id="_LoHvgFiwEd-NI4xNr35e-w" name="autor" type="_hex4MFhMEd-eq7g3DNBZCQ" isUnique="false" association="_LnOXoFiwEd-NI4xNr35e-w">
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LoYOMFiwEd-NI4xNr35e-w" value="*"/>
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LoZcUFiwEd-NI4xNr35e-w"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LoYOMFiwEd-NI4xNr35e-w" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LoZcUFiwEd-NI4xNr35e-w" value="1"/>
     </ownedEnd>
     <ownedEnd xmi:id="_Ln8wYFiwEd-NI4xNr35e-w" name="contrato_Direitos_Autorais" type="_HpA1oFiwEd-NI4xNr35e-w" isUnique="false" association="_LnOXoFiwEd-NI4xNr35e-w">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_LoGhYFiwEd-NI4xNr35e-w" value="*"/>
