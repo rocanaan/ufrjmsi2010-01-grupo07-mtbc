@@ -37,6 +37,11 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_nkl_4FhMEd-eq7g3DNBZCQ" name="Deposito"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_ElRg0FhNEd-eq7g3DNBZCQ" name="Pedido Compra">
+    <ownedRule xmi:id="_yOizsF43Ed-7f4F2dzPgOQ" name="Constraint" constrainedElement="_ElRg0FhNEd-eq7g3DNBZCQ">
+      <specification xmi:type="uml:OpaqueExpression" xmi:id="_yOnsMF43Ed-7f4F2dzPgOQ" name="specification" body="">
+        <language>OCL</language>
+      </specification>
+    </ownedRule>
     <ownedAttribute xmi:id="_dF0aQFhUEd-eq7g3DNBZCQ" name="Property_0" isUnique="false"/>
     <ownedAttribute xmi:id="_pTscwF4wEd-7f4F2dzPgOQ" name="Item" type="_gnfq4FhMEd-eq7g3DNBZCQ" isUnique="false">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r0HyIF4wEd-7f4F2dzPgOQ" value="*"/>
