@@ -2,12 +2,12 @@
 -- Participantes:
 -- Alice Tomaz
 -- Andre Carvalho
--- Patrícia Borges
+-- Patrï¿½cia Borges
 -- Rodrigo Canaan
 
 model EditoraABC
 
-class Autor
+class Autor --ok
 operations
 end
 
@@ -15,45 +15,35 @@ class Livro
 attributes
 	titulo: String
 	preco : Real
-	prazo : String
+	prazo : Integer
+	quantidade_estoque : Integer	
 	disponibilidade : Boolean
 operations
-end
+end --o que eh prazo, disponibilidade? Perguntar ao Eber
 
-class Editor
+class Editor --ok
 operations
 end
 
 class Grafica
-attributes
-	cotacao : Real
 operations
-end
+end --ok
 
 class Contrato_Direitos_Autorais
+attributes
+  prazo_validade : Date
 operations
-end
-
-class Deposito 
-operations
-end
+end  --ok
 
 class PedidoCompra
-attributes
-	itemLivro : Set(Livro)
+attributes	
 	formaEnvio : String
-	valorTotal : Real
-	dataPedido : Integer
+	dataPedido : Date
 operations
 	--
 	--PedidoCompra->collect
-end
+end --ok
 
-class SetorComercial
-attributes
-operations
-	getValorTotalVenda():Real = if (pedido) pedido.collect(valorTotal)->sum()
-end
 
 class Date
 attributes
@@ -61,135 +51,145 @@ attributes
 	mes : Integer
 	ano : Integer
 operations
-	ehOntem(Date) : boolean
-	ehAmanaha(Date) : boolean
-	ehHoje(Date) : boolean
+	ehOntem(date:Date) : Boolean
+	ehAmanaha(date:Date) : Boolean
+	ehHoje(date:Date) : Boolean
 end
 class Entrega
 attributes
-	custo : Real
+	--custo : Real
+	data: Date
 operations
 	
-end
+end  --ok
 
-class Livreiro
+class Pagamento
+ attributes
+    data : Date
+end --ok
+
+class Livreiro 
 attributes
-	cidadde : String
+	cidade : String
 operations
-end
+end --ok
 
 class SolicitacaoDevolucao
+attributes
+  analizada : Boolean
+  autorizada : Boolean
 operations
-end
+end --falta constraint - uma solicitacao so pode ser autorizada se for analizada
 
 class Fatura
 attributes
 	formaPagamento : String
-	prazoPagamento : String 
+	prazoPagamento : Date 
+	paga : Boolean
 operations
-end
+end  --ok
 
 class Transportadora
-attributes
-	valorFrete : Real
 operations
-end
+end  --ok
 
 
 association AutorEscreveLivro between
 Livro[1..*] 
 Autor[1..*] 
-end
+end --ok
 
 association Contrato_Refere_Livro between
-Livro[*] 
-Contrato_Direitos_Autorais[*] 
-end
+Livro[1] 
+Contrato_Direitos_Autorais[1] 
+end --ok
 
 association Edita between
-Editor[*]
+Editor[1..*]
 Livro[*]
-end
+end --ok
 
-association Deposito_Armazena_Livro between
-Livro[*]
-Deposito[1]
-end
-
-association Livro_Esta_Pedido between
-PedidoCompra[*]
-Livro[*]
-end
-
-association Solicitacao_Requer_Devolucao_Livro between
+associationclass Solicitacao_Requer_Devolucao_Livro between
 Livro[*]
 SolicitacaoDevolucao[*]
-end
+attributes
+  quantidade : Integer
+  motivo: String
+end  --ok
 
-association Entrega_Inclui_Livro between
+associationclass Entrega_Inclui_Livro between
 Livro[*]
 Entrega[*]
-end
+attributes
+	quantidade_entregue : Integer
+end  --ok
+
+associationclass Pedido_Contem_Livro between
+Livro[1..*] role livro
+PedidoCompra[0..*] role pedido
+attributes
+	quantidade : Integer
+end --ok
 
 associationclass Grafica_Imprime_Livro between
 Livro[*] role livro_impresso
-Grafica[1..*] role imprime
+Grafica[1] role imprime
 attributes
 	cotacao : Real
-end
+end --ok
 
-associationclass Grafica_cota_Livro between
+associationclass Grafica_Cota_Livro between
 Livro[*]
-Grafica[1..1] role cota
+Grafica[*] role cota
 attributes
 	cotacao : Real
-end
+end --ok
 
-association Autor_Assina_Contrato between
-Autor[1]
+associationclass Autor_Assina_Contrato between
+Autor[1..*]
 Contrato_Direitos_Autorais[*]
-end
+attributes
+  taxa_direitos_autorais_desse_autor : Real
+end --ok
 
 association Entrega_PedidoCompra between
 Entrega[*]
 PedidoCompra[*]
-end
-
-association Livreiro_Recebe_Entrega between
-Livreiro[1]
-Entrega[*]
-end
+end --ok
 
 association Transportadora_Faz_Entrega between
 Entrega[*]
 Transportadora[1]
-end
+end  --ok
 
 association Entrega_Origina_Fatura between
 Entrega[1]
 Fatura[1]
-end
+end --ok
 
 association Livreiro_Faz_Solicitacao_Devolucao between
 SolicitacaoDevolucao[*]
 Livreiro[1]
-end
+end --ok
 
-association Transportadora_Custa_Para_Livreiro between
+associationclass Transportadora_Custa_Para_Livreiro between
 Livreiro[*]
 Transportadora[*]
-end
+attributes
+	custo_frete : Real
+end --ok
 
-association Livreiro_Paga_Fatura between
+association Livreiro_Faz_Pagamento between
 Livreiro[1]
-Fatura[*]
-end
+Pagamento[*]
+end --ok
 
-association SetorComercial_PedidoCompra between
-SetorComercial[1] role setor
-PedidoCompra[*] role pedido
-end
-constraints
+association Pagamento_Inclui_Fatura between
+Pagamento[1]
+Fatura[*]
+end --ok
+
+
 
 -- context Grafica
 
@@ -198,8 +198,8 @@ constraints
 
 
 
-context Entrega
-inv: custo = transportadora.valorFrete + pedidoCompra->collect(valorTotal)->sum()
+--context Entrega
+--inv: custo = transportadora.valorFrete + pedidoCompra->collect(valorTotal)->sum()
 /*
 context PedidoCompra :: getValorTotalVenda() : Real 
  = pedidoCompra->collect(valorTotal)->sum()
