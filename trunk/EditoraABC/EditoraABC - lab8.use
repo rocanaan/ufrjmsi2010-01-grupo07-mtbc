@@ -1,0 +1,285 @@
+-- Trabalho Grupo 7
+-- Participantes:
+-- Alice Tomaz
+-- Andre Carvalho
+-- Patr�cia Borges
+-- Rodrigo Canaan
+
+model EditoraABC
+
+class Event
+attributes
+	time : Date
+operations
+	effect()
+end
+
+class Autor --ok
+operations
+end
+
+class Livro
+attributes
+	titulo: String
+	preco : Real
+	prazo : Integer
+	quantidade_estoque : Integer	
+	disponibilidade : Boolean
+operations
+end --o que eh prazo, disponibilidade? Perguntar ao Eber
+
+class Editor --ok
+operations
+end
+
+class Grafica
+operations
+end --ok
+
+class Contrato_Direitos_Autorais
+attributes
+  prazo_validade : Date
+operations
+end  --ok
+
+class PedidoCompra
+attributes	
+	id : Integer 
+	formaEnvio : String
+	dataPedido : Date
+operations
+	valorTotal() : Real = 0
+	--PedidoCompra->collect
+end --ok
+
+
+class Date
+attributes
+	dia : Integer
+	mes : Integer
+	ano : Integer
+operations
+	ehOntem(date:Date) : Boolean
+	ehAmanaha(date:Date) : Boolean
+	ehHoje(date:Date) : Boolean
+end
+class Entrega
+attributes
+	--custo : Real
+	data: Date
+operations
+	
+end  --ok
+
+class Pagamento
+ attributes
+	id : Integer
+	valor : Real
+    data : Date
+end --ok
+
+class Livreiro 
+attributes
+	id : Integer
+	cidade : String
+operations
+end --ok
+
+class SolicitacaoDevolucao
+attributes
+  analizada : Boolean
+  autorizada : Boolean
+operations
+end --falta constraint - uma solicitacao so pode ser autorizada se for analizada
+
+class Fatura
+attributes
+	id : Integer
+	formaPagamento : String
+	prazoPagamento : Date 
+	paga : Boolean
+	
+operations
+end  --ok
+
+class Transportadora
+operations
+end  --ok
+
+
+
+association AutorEscreveLivro between
+Livro[1..*] 
+Autor[1..*] 
+end --ok
+
+association Contrato_Refere_Livro between
+Livro[1] 
+Contrato_Direitos_Autorais[1] 
+end --ok
+
+association Edita between
+Editor[1..*]
+Livro[*]
+end --ok
+
+associationclass Solicitacao_Requer_Devolucao_Livro between
+Livro[*]
+SolicitacaoDevolucao[*]
+attributes
+  quantidade : Integer
+  motivo: String
+end  --ok
+
+associationclass Entrega_Inclui_Livro between
+Livro[*]
+Entrega[*]
+attributes
+	quantidade_entregue : Integer
+end  --ok
+
+associationclass Pedido_Contem_Livro between
+Livro[1..*] role livro
+PedidoCompra[0..*] role pedido
+attributes
+	quantidade : Integer
+end --ok
+
+associationclass Grafica_Imprime_Livro between
+Livro[*] role livro_impresso
+Grafica[1] role imprime
+attributes
+	cotacao : Real
+end --ok
+
+associationclass Grafica_Cota_Livro between
+Livro[*]
+Grafica[*] role cota
+attributes
+	cotacao : Real
+end --ok
+
+associationclass Autor_Assina_Contrato between
+Autor[1..*]
+Contrato_Direitos_Autorais[*]
+attributes
+  taxa_direitos_autorais_desse_autor : Real
+end --ok
+
+association Entrega_PedidoCompra between
+Entrega[*]
+PedidoCompra[*]
+end --ok
+
+association Transportadora_Faz_Entrega between
+Entrega[*]
+Transportadora[1]
+end  --ok
+
+association Entrega_Origina_Fatura between
+Entrega[1]
+Fatura[1]
+end --ok
+
+association Livreiro_Faz_Solicitacao_Devolucao between
+SolicitacaoDevolucao[*]
+Livreiro[1]
+end --ok
+
+associationclass Transportadora_Custa_Para_Livreiro between
+Livreiro[*]
+Transportadora[*]
+attributes
+	custo_frete : Real
+end --ok
+
+association Livreiro_Faz_Pagamento between
+Livreiro[1] role cliente
+Pagamento[*]
+end --ok
+
+association Pagamento_Inclui_Fatura between
+Pagamento[1]
+Fatura[*]
+end --ok
+
+association Livreiro_Faz_Pedido between
+Livreiro [1] role cliente
+PedidoCompra [*] role pedido
+end
+
+-- ENTREGA 7
+
+class ConsultaPedido < Event
+attributes
+	answer: Set(Tuple(p: Integer, c: Integer, t: Real))
+operations
+	effect() : Bag(Tuple(p: Integer, c: Integer, t: Real))= pedido->collect(x | Tuple { p = x.id, c = x.cliente.id, t = x.valorTotal() } )
+end 
+
+association Consulta_Pedidos between
+ConsultaPedido [*] 
+PedidoCompra [*] role pedido
+end
+
+class ConsultaPagamentos < Event
+attributes
+	answer: Set(Tuple(f: Bag(Integer), c: Integer, v: Real))
+operations
+	effect() : Bag(Tuple(f: Bag(Integer), c: Integer, v: Real))= pagamento->collect(x | Tuple { f = x.fatura.id, c = x.cliente.id, v = x.valor } )
+end
+
+association Consulta_Pagamentos between
+ConsultaPagamentos [*] 
+Pagamento [*]
+end
+
+class RecebimentoLivro < Event
+attributes
+	answer: Tuple(quant: Integer, data: Date)
+operations
+	effect()
+
+end
+
+association Recebe_Pedidos between
+RecebimentoLivro [*]
+Livro [1]
+end
+
+class PagamentoFatura < Event
+attributes
+	answer: Tuple(valor: Integer)
+operations
+	effect()
+
+end
+
+association Pagamento_De_Fatura between
+PagamentoFatura [*]
+Fatura [1]
+end
+
+constraints
+
+context RecebimentoLivro::effect()
+	post AumentaQuantidade : 
+		livro.quantidade_estoque = livro.quantidade_estoque@pre+answer.quant
+		
+context PagamentoFatura::effect()
+	post PagaFatura : 
+		fatura.paga
+
+-- context Grafica
+
+-- context Livro
+-- inv: self.imprime = self.cota->select(g:Grafica | g.Grafica_cota_Livro.cotacao = )
+
+
+
+--context Entrega
+--inv: custo = transportadora.valorFrete + pedidoCompra->collect(valorTotal)->sum()
+/*
+context PedidoCompra :: getValorTotalVenda() : Real 
+ = pedidoCompra->collect(valorTotal)->sum()
+*/
